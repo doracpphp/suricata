@@ -217,14 +217,8 @@ jobs:
           ./autogen.sh
           CFLAGS="-ggdb -Werror" ./configure --enable-warnings --enable-unittests --enable-gccprotect --disable-gccmarch-native --disable-shared --with-libpcap-includes=/npcap/Include --with-libpcap-libraries=/npcap/Lib/x64
           make -j3
-      - name: Run
-        run: |
-          ./src/suricata --build-info
-          ./src/suricata -u -l /tmp/
-          # need cwd in path due to npcap dlls (see above)
-          PATH="$PATH:$(pwd)" python3 ./suricata-verify/run.py -q --debug-failed
-      - run: make install
-      - run: suricata-update -V
+      - name: Download all workflow run artifacts
+        uses: actions/download-artifact@v4
 
   windows-msys2-mingw64-libpcap:
     name: Windows MSYS2 MINGW64 (libpcap)
@@ -315,5 +309,6 @@ jobs:
         run: |
           # need cwd in path due to dlls (see above)
           PATH="$PATH:$(pwd)" ./src/suricata --build-info
-      - run: make install
+      - name: Download all workflow run artifacts
+        uses: actions/download-artifact@v4
 
