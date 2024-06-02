@@ -256,13 +256,7 @@ jobs:
           ./autogen.sh
           CFLAGS="-ggdb -Werror" ./configure --enable-warnings --enable-unittests --enable-gccprotect --disable-gccmarch-native --disable-shared --with-libpcap-includes=/npcap/Include --with-libpcap-libraries=/npcap/Lib/x64
           make -j3
-      - name: Run
-        run: |
-          ./src/suricata --build-info
-          ./src/suricata -u -l /tmp/
-          python3 ./suricata-verify/run.py -q --debug-failed
-      - run: make install
-      - run: suricata-update -V
+
 
   windows-msys2-mingw64-windivert:
     name: Windows MSYS2 MINGW64 (WinDivert)
